@@ -8,7 +8,7 @@ import { isEmpty } from '../utils';
 import { repositoryProvider } from '../repositories';
 
 // imported for typings
-import { SyncStateManager } from './sync-state-manager';
+// import { SyncStateManager } from './sync-state-manager';
 
 const pushTrackingByCollection = {};
 
@@ -41,9 +41,7 @@ export class SyncManager {
     }
 
     return prm
-      .then((entityIds) => {
-        return this._syncStateManager.getSyncItems(collection, entityIds);
-      })
+      .then((entityIds) => this._syncStateManager.getSyncItems(collection, entityIds))
       .then((syncItems = []) => this._processSyncItems(syncItems))
       .then((pushResult) => {
         this._markPushEnd(collection);
@@ -244,20 +242,21 @@ export class SyncManager {
   // TODO: error handling needs consideration
   _processSyncItems(syncItems) {
     if (isEmpty(syncItems)) {
-      return Promise.resolve();
+      return Promise.resolve([]);
     }
 
     const queue = new PromiseQueue(syncBatchSize);
     const pushResults = [];
 
     return new Promise((resolve) => { // TODO: too nested, refactor?
-      syncItems.forEach((syncItem, index) => {
+      let completedCount = 0;
+      syncItems.forEach((syncItem) => {
         queue.enqueue(() => {
           return this._processSyncItem(syncItem)
             .then((pushResult) => {
               pushResults.push(pushResult);
-              const lastPushCompleted = syncItems.length === index + 1;
-              if (lastPushCompleted) {
+              completedCount += 1;
+              if (syncItems.length === completedCount) {
                 resolve(pushResults);
               }
             });
@@ -313,7 +312,7 @@ export class SyncManager {
       return validationError;
     }
 
-    return this._callStateManager(collection, entities, syncOp)
+    return this._setState(collection, entities, syncOp)
       .then(() => entities);
   }
 
@@ -330,7 +329,7 @@ export class SyncManager {
     return null;
   }
 
-  _callStateManager(collection, entities, syncOp) {
+  _setState(collection, entities, syncOp) {
     switch (syncOp) {
       case SyncOperation.Create:
         return this._syncStateManager.addCreateEvent(collection, entities);

@@ -7,12 +7,12 @@ export class KeyValuePersister {
   _ttl;
 
   // TODO: implement TTL, make _cache a constructor argument?
-  constructor(cacheEnabled = true, ttl = Infinity) {
+  constructor(cacheEnabled = false, ttl = Infinity) {
     this._cacheEnabled = cacheEnabled;
     this._ttl = ttl;
   }
 
-  readEntities(key) {
+  read(key) {
     if (this._cacheEnabled && _cache[key]) {
       return Promise.resolve(_cache[key]);
     }
@@ -26,26 +26,29 @@ export class KeyValuePersister {
       });
   }
 
-  persistEntities(key, entities) {
-    if (this._cacheEnabled) {
-      delete _cache[key];
-    }
-    return this._writeToPersistance(key, entities)
+  write(key, value) {
+    this._invalidateCache(key);
+    return this._writeToPersistance(key, value)
       .then((result) => {
         if (this._cacheEnabled && this._ttl < Infinity) {
           setTimeout(() => {
-            delete _cache[key];
+            this._invalidateCache(key);
           }, this._ttl);
         }
         return result;
       });
   }
 
-  deleteEntities(key) {
-    if (this._cacheEnabled) {
-      delete _cache[key];
-    }
-    return this._deletePersistance(key);
+  delete(key) {
+    return this._deleteFromPersistance(key)
+      .then((result) => {
+        this._invalidateCache(key);
+        return result;
+      });
+  }
+
+  getKeys() {
+    this._throwNotImplementedError();
   }
 
   _throwNotImplementedError() {
@@ -60,7 +63,13 @@ export class KeyValuePersister {
     this._throwNotImplementedError(key, array);
   }
 
-  _deletePersistance(key) {
+  _deleteFromPersistance(key) {
     this._throwNotImplementedError(key);
+  }
+
+  _invalidateCache(key) {
+    if (this._cacheEnabled) {
+      delete _cache[key];
+    }
   }
 }
