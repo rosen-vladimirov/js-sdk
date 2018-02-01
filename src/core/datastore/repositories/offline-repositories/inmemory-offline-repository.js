@@ -1,8 +1,10 @@
+import { Promise } from 'es6-promise';
 import keyBy from 'lodash/keyBy';
+
 import { NotFoundError } from '../../../errors';
 
 import { OfflineRepository } from '../offline-repository';
-import { applyQueryToDataset } from '../utils';
+import { applyQueryToDataset, applyAggregationToDataset } from '../utils';
 import { ensureArray } from '../../../utils';
 
 // Imported for typings
@@ -90,6 +92,11 @@ export class InmemoryOfflineRepository extends OfflineRepository {
     // currently it's only called from Kinvey.DataStore.clear()
     return this._getAllCollections()
       .then(collections => this._clearCollections(collections));
+  }
+
+  group(collection, aggregationQuery) {
+    return this._readAll(collection)
+      .then(allEntities => applyAggregationToDataset(allEntities, aggregationQuery));
   }
 
   // protected methods
