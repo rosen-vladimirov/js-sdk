@@ -4,8 +4,6 @@ import isEmpty from 'lodash/isEmpty';
 
 import { repositoryProvider } from '../datastore';
 
-import { repositoryProvider } from '../datastore';
-
 export function noop() { }
 
 export function isPromiseLike(obj) {
