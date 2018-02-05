@@ -10,3 +10,4 @@ if (typeof module === 'object') {
 } else {
   window.Constants = Constants;
 }
+
