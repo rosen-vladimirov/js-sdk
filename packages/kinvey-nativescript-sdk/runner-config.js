@@ -89,8 +89,8 @@ function runPipeline(osName) {
         ]
       })),
       runCommand({
-        command: 'tns',
-        args: ['doctor'],
+        command: 'pod',
+        args: ['repo', 'update'],
         cwd: appRootPath
       }),
       runCommand({
