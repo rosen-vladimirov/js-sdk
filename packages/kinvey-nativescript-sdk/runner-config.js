@@ -94,6 +94,16 @@ function runPipeline(osName) {
         cwd: appRootPath
       }),
       runCommand({
+        command: 'gem',
+        args: ['install', 'cocoapods'],
+        cwd: appRootPath
+      }),
+      runCommand({
+        command: 'pod',
+        args: ['update'],
+        cwd: appRootPath
+      }),
+      runCommand({
         command: 'tns',
         args: ['run', osName, '--justlaunch'],
         cwd: appRootPath
