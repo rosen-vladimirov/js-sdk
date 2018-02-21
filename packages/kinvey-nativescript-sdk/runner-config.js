@@ -90,6 +90,11 @@ function runPipeline(osName) {
       })),
       runCommand({
         command: 'tns',
+        args: ['doctor'],
+        cwd: appRootPath
+      }),
+      runCommand({
+        command: 'tns',
         args: ['run', osName, '--justlaunch'],
         cwd: appRootPath
       })
