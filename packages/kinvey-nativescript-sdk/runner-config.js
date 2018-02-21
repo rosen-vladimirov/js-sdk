@@ -89,6 +89,11 @@ function runPipeline(osName) {
         ]
       })),
       runCommand({
+        command: 'ls -al',
+        args: ['/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/include'],
+        cwd: appRootPath
+      }),
+      runCommand({
         command: 'tns',
         args: ['run', osName, '--justlaunch'],
         cwd: appRootPath
