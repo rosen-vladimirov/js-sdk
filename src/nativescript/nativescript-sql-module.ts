@@ -17,6 +17,9 @@ export class NativescriptSqlModule {
     const isMaster = collection === sqliteCollectionsMaster;
     const isMulti = Array.isArray(query);
     query = isMulti ? query : [[query, parameters]];
+    
+    console.log('openTransaction')
+    console.log(collection, query, parameters, write);
 
     return new NativeScriptSQLite(this._databaseName)
       .then((db) => {
@@ -47,9 +50,11 @@ export class NativescriptSqlModule {
           return prev
             .then(() => {
               if (write === false) {
+                console.log('db.all', sql, parts[1]);
                 return db.all(sql, parts[1]);
               }
 
+              console.log('db.execSQL', sql, parts[1]);
               return db.execSQL(sql, parts[1]);
             })
             .then((resultSet = []) => {
