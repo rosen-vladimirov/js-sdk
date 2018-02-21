@@ -18,7 +18,7 @@ export class NativescriptSqlModule {
     const isMulti = Array.isArray(query);
     query = isMulti ? query : [[query, parameters]];
     
-    console.log('openTransaction')
+    console.log('openTransaction');
     console.log(collection, query, parameters, write);
 
     return new NativeScriptSQLite(this._databaseName)
