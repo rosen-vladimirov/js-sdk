@@ -26,6 +26,9 @@ class SQLiteAdapter {
     const isMulti = Array.isArray(query);
     query = isMulti ? query : [[query, parameters]];
 
+    console.log('openTransaction')
+    console.log(collection, query, parameters, write);
+
     return new nativeScriptSQLite(this.name)
       .then((db) => {
         // This will set the database to return the results as an array of objects
@@ -55,9 +58,11 @@ class SQLiteAdapter {
           return prev
             .then(() => {
               if (write === false) {
+                console.log('db.all', sql, parts[1]);
                 return db.all(sql, parts[1]);
               }
 
+              console.log('db.execSQL', sql, parts[1]);
               return db.execSQL(sql, parts[1]);
             })
             .then((resultSet = []) => {
