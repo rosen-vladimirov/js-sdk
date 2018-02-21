@@ -40,8 +40,8 @@ function runPipeline(osName) {
       remove(appRootPath),
       runCommand({
         command: 'npm',
-        args: ['run', 'build'],
-        cwd: rootMonoRepoPath
+        args: ['run', `build:${osName}`],
+        cwd: path.join(rootMonoRepoPath, 'packages', 'kinvey-nativescript-sdk')
       }),
       runCommand({
         command: 'tns',
