@@ -41,7 +41,7 @@
     "finalhandler": "^1.0.4",
     "fs-extra": "~4.0.2",
     "json-loader": "~0.5.4",
-    "kinvey-universal-runner": "^1.0.0",
+    "kinvey-universal-runner": "./kinvey-universal-runner-1.0.2.tgz",
     "klaw-sync": "^3.0.0",
     "lerna": "^2.4.0",
     "local-storage": "~1.4.2",
