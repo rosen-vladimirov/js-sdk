@@ -6,29 +6,30 @@ const testsConfig = {
   propertyFromBLValue: true
 };
 
+
 const appCredentials = {
   html5: {
-    appKey: 'kid_H1fs4gFsZ',
-    appSecret: 'aa42a6d47d0049129c985bfb37821877'
+    appKey: 'kid_Bk1a8REEf',
+    appSecret: 'cd7d322a98bf4a1f8022ca8911f2f7dc',
   },
   nativescript: {
     android: {
-      appKey: 'kid_ryEW0UQrM',
-      appSecret: '5a006e23a102442884dc9de5d2d2abc9',
+      appKey: 'kid_Bk1a8REEf',
+      appSecret: 'cd7d322a98bf4a1f8022ca8911f2f7dc',
     },
     ios: {
-      appKey: 'kid_By6pBd7BG',
-      appSecret: '7568820462ce40eeb1f56ec01a4cf2ae',
+      appKey: 'kid_Bk1a8REEf',
+      appSecret: 'cd7d322a98bf4a1f8022ca8911f2f7dc',
     }
   },
   phonegap: {
     android: {
-      appKey: 'kid_SyP_lFXBz',
-      appSecret: '997be7e8aae142fb89796352dc57b5be',
+      appKey: 'kid_Bk1a8REEf',
+      appSecret: 'cd7d322a98bf4a1f8022ca8911f2f7dc',
     },
     ios: {
-      appKey: 'kid_SyqplFXrz',
-      appSecret: 'c00090630ace4eb3956367a44319afcf',
+      appKey: 'kid_Bk1a8REEf',
+      appSecret: 'cd7d322a98bf4a1f8022ca8911f2f7dc',
     }
   }
 };
